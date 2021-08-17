@@ -99,6 +99,7 @@ Note that by default the `'relative'` position is applied to all elements. To di
 ```javascript
 triggerOffset: 50,
 time: 1,
+delay: 0,
 element: $(this),
 trigger: $(this),
 easing: 'swing',
@@ -118,6 +119,7 @@ callbackPostOut: function(){}
 | -------------------------------- | -------------- |
 | `triggerOffset`                | *sets a distance offset before triggering an event. In other words you may want to have part or all of the element fully in view before applying the annimation.* |
 | `time`                         | *the number of seconds to animate for. This can take decimals eg. 1.2 or 2.5.* |
+| `delay`                        | *the number of seconds to delay before triggering. This can take decimals eg. 1.2 or 2.5.* |
 | `element`                      | *The element to run animation events on* |
 | `trigger`                      | *The trigger element that will run the animation on the target element once in view* |
 | `easing`                       | *This can accept any available JQuery animate easing type, see [https://api.jquery.com/animate](https://api.jquery.com/animate)* |

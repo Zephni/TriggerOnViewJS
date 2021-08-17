@@ -16,6 +16,7 @@ $(function(){
                 var defaultOptions = {
                     triggerOffset: 50,
                     time: 1,
+                    delay: 0,
                     element: $(this),
                     trigger: $(this),
                     easing: 'swing',
@@ -74,8 +75,11 @@ $(function(){
                         // Update the trigger buffer
                         triggerdBuffer = triggerd;
 
-                        // Run trigger function with either 'in' or 'out' based on triggered boolean
-                        trigger((triggerd) ? 'in' : 'out');
+                        // Apply delay if set
+                        setTimeout(function(){
+                            // Run trigger function with either 'in' or 'out' based on triggered boolean
+                            trigger((triggerd) ? 'in' : 'out');
+                        }, options.delay * 1000);
                     }
                 }
 
