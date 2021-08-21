@@ -53,7 +53,7 @@ If you wish to have a different trigger element you can do this two ways:
 
 ```javascript
 $('#trigger').triggerOnView({
-  triggger: $('#element'),
+  element: $('#element'),
   ...
 });
 ```
