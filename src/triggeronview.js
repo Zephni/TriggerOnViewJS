@@ -23,7 +23,7 @@ $(function(){
                     defaultPosition: 'relative',
                     default:{opacity: 0},
                     in:{opacity: 1},
-                    out: null,
+                    out: false,
                     callbackPreIn: function(){},
                     callbackPreOut: function(){},
                     callbackPostIn: function(){},
@@ -44,7 +44,7 @@ $(function(){
                 options.time *= 1000;
 
                 // Set out to default if not set
-                options.out = (options.out == null) ? options.default : false;
+                options.out = (options.out == null) ? options.default : options.out;
 
                 // Set up default
                 (typeof options.defaultPosition == 'string') ? options.element.css({position: options.defaultPosition}) : null;
