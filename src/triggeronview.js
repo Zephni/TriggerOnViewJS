@@ -26,7 +26,7 @@ $(function(){
                     default: {},
                     in: {},
                     out: {},
-                    callbackPreIn: function(){console.log('test')},
+                    callbackPreIn: function(){},
                     callbackPreOut: function(){},
                     callbackPostIn: function(){},
                     callbackPostOut: function(){}
