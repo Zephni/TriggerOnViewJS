@@ -14,17 +14,19 @@ $(function(){
             return $(this).each(function(){
                 // Default options
                 var defaultOptions = {
-                    triggerOffset: 50,
+                    triggerOffset: 0,
                     time: 1,
                     delay: 0,
+                    inDelay: false,
+                    outDelay: false,
                     element: $(this),
                     trigger: $(this),
                     easing: 'swing',
                     defaultPosition: 'relative',
-                    default:{opacity: 0},
-                    in:{opacity: 1},
-                    out: false,
-                    callbackPreIn: function(){},
+                    default: {},
+                    in: {},
+                    out: {},
+                    callbackPreIn: function(){console.log('test')},
                     callbackPreOut: function(){},
                     callbackPostIn: function(){},
                     callbackPostOut: function(){}
@@ -42,6 +44,10 @@ $(function(){
 
                 // Time x1000
                 options.time *= 1000;
+
+                // Setup in and out delays
+                options.inDelay = (!options.inDelay) ? options.delay : options.inDelay;
+                options.outDelay = (!options.outDelay) ? options.delay : options.outDelay;
 
                 // Set out to default if not set
                 options.out = (options.out == null) ? options.default : options.out;
@@ -75,11 +81,14 @@ $(function(){
                         // Update the trigger buffer
                         triggerdBuffer = triggerd;
 
+                        // Get in or out
+                        inOrOut = (triggerd) ? 'in' : 'out';
+                        
                         // Apply delay if set
                         setTimeout(function(){
                             // Run trigger function with either 'in' or 'out' based on triggered boolean
-                            trigger((triggerd) ? 'in' : 'out');
-                        }, options.delay * 1000);
+                            trigger(inOrOut);
+                        }, ((inOrOut == 'in') ? options.inDelay : options.outDelay) * 1000);
                     }
                 }
 
@@ -90,7 +99,7 @@ $(function(){
                  */
                 function trigger(triggerType)
                 {
-                    // If somehow already running this trigger type then return
+                    // If already running this trigger type then return
                     if(isRunning == triggerType) return;
 
                     // Call the correct pre animate callback function
@@ -100,7 +109,7 @@ $(function(){
                     var animateCSS = (triggerType == 'in') ? options.in : (triggerType == 'out') ? options.out : false;
 
                     // Check that animateCSS has values as is not false
-                    if(Object.keys(animateCSS).length > 0 && animateCSS !== false)
+                    if(animateCSS !== false && Object.keys(animateCSS).length > 0)
                     {
                         // Set the current running trigger
                         isRunning = triggerType;
