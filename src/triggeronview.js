@@ -103,7 +103,7 @@ $(function(){
                     if(isRunning == triggerType) return;
 
                     // Call the correct pre animate callback function
-                    (isRunning == 'in') ? options.callbackPreIn() : (isRunning == 'out') ? options.callbackPreOut() : null;
+                    (triggerType == 'in') ? options.callbackPreIn() : (triggerType == 'out') ? options.callbackPreOut() : null;
 
                     // Set the correct CSS animate object
                     var animateCSS = (triggerType == 'in') ? options.in : (triggerType == 'out') ? options.out : false;
@@ -117,7 +117,7 @@ $(function(){
                         // Stop any current animations and the animate with current parameter
                         options.element.stop().animate(animateCSS, options.time, options.easing, function(){
                             // Call the correct post animate callback function
-                            (isRunning == 'in') ? options.callbackPostIn() : (isRunning == 'out') ? options.callbackPostOut() : null;
+                            (triggerType == 'in') ? options.callbackPostIn() : (triggerType == 'out') ? options.callbackPostOut() : null;
 
                             // Set running to false
                             isRunning = false;
