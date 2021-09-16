@@ -1,10 +1,21 @@
 $(function(){
     $.fn.extend({
-        triggerOnView: function(passedOptions = {}) {
+        triggerOnView: function(defaultOptions = null, passedOptions = null) {
+            // If only first param passed then shuffle variables
+            if(defaultOptions != null && passedOptions == null)
+            {
+                passedOptions = defaultOptions;
+                defaultOptions = {};
+            }
+
             // If array passed, loop and set up all elements
             if(Array.isArray(passedOptions)){
                 for(key in passedOptions)
                 {
+                    // Apply passed options to the default option set
+                    passedOptions = Object.assign(defaultOptions, passedOptions);
+
+                    // Run triggerOnView
                     $(this).triggerOnView(passedOptions[key]);
                 }
 
