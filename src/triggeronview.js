@@ -13,7 +13,7 @@ $(function(){
                 for(key in passedOptions)
                 {
                     // Apply passed options to the default option set
-                    passedOptions = Object.assign(defaultOptions, passedOptions);
+                    passedOptions[key] = Object.assign(defaultOptions, passedOptions[key]);
 
                     // Run triggerOnView
                     $(this).triggerOnView(passedOptions[key]);
