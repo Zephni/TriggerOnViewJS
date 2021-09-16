@@ -48,7 +48,7 @@ $(function(){
                 
                 // Setup trigger and trigger buffer
                 var triggerd = false;
-                var triggerdBuffer = false;
+                var triggerdBuffer = null;
 
                 // Is running, to avoid duplicate triggers
                 var isRunning = false;
