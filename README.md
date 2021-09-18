@@ -34,12 +34,12 @@ This is the most basic version, it sets the given element as both the trigger an
 ```javascript
 TriggerOnView({
   element: '#elementToAnimate',
-  default: {opacity: 0},
   in: opacity: 1},
+  out: {opacity: 0}
 });
 ```
 
-Note that we have set the `default` and `in` options. Everything within default will be ran straight away and set without any animation. The `in` option will set the animation once the trigger element comes into view. By default if you do not include an `out` option, `default` will be used to animate back from once the trigger element is out of view.
+Note that we have set the `in` and `out` options. Everything within `out` will be ran straight away and set without any animation. The `in` option will set the animation once the trigger element comes into view, and `out` once it leaves the view. If you wish to customise the default set of CSS rules then use the `default` option as explained in the options list.
 
 If you wish to have a different trigger element you can pass both, if trigger is not set then it will default to the same as the given element:
 
@@ -51,7 +51,7 @@ TriggerOnView({
 });
 ```
 
-You can assign multiple elements at once with your query selector eg. using a class.
+You can assign multiple elements at once with your query selector eg. using a class, by not providing a trigger each element will be it's own trigger.
 
 ```javascript
 TriggerOnView({
@@ -64,16 +64,16 @@ Commonly you may have a single trigger, but multiple elements within that need t
 ```javascript
 TriggerOnView([
   {
-    trigger: '#trigger',
     element: '#exampleItem1',
-    default: {left: -100, opacity: 0},
+    trigger: '#trigger',
     in: {left: 0, opacity: 1},
+    out: {left: -100, opacity: 0}
   },
   {
-    trigger: '#trigger',
     element: '#exampleItem2',
-    default: {left: 100, opacity: 0},
+    trigger: '#trigger',
     in: {left: 0, opacity: 1},
+    out: {left: 100, opacity: 0}
   }
 ]);
 ```
@@ -87,13 +87,13 @@ TriggerOnView({
   },[
   {
     element: '#exampleItem1',
-    default: {left: -100, opacity: 0},
     in: {left: 0, opacity: 1},
+    out: {left: -100, opacity: 0}
   },
   {
     element: '#exampleItem2',
-    default: {left: 100, opacity: 0},
     in: {left: 0, opacity: 1},
+    out: {left: 100, opacity: 0}
   }
 ]);
 ```
@@ -138,9 +138,9 @@ callbackPostOut: function(){}
 | `easing`                       | *This can accept any available Velocity animate easing type, see [http://velocityjs.org/#easing](http://velocityjs.org/#easing)* |
 | `defaultPosition`              | *In most cases a relative position will be required for the element so it can respond to directional positioning values but this can be changed if needed. This can accept any CSS position value.* |
 | `runInOnEntry`                 | *Run the in animation if page loads with trigger in view* |
-| `default`                      | *The default CSS to apply to the target element, this will be ran straight away and also be used as the out animation if `out` is not false.* |
+| `default`                      | *The default CSS to apply to the target element, this will be ran straight away. Will be set to `out` by default if not defined.* |
 | `in`                           | *The CSS to animate once the `in` trigger has been called* |
-| `out`                          | *The CSS to animate once the `out` trigger has been called. Set to false to prevent out animation* |
+| `out`                          | *The CSS to animate once the `out` trigger has been called. Set to `{}` to prevent out animation* |
 | `callbackPreIn`                | *A callback function to be called as soon as the `in` trigger begins* |
 | `callbackPreOut`               | *A callback function to be called as soon as the `out` trigger begins* |
 | `callbackPostIn`               | *A callback function to be called as soon as the `in` trigger animation has ended* |
