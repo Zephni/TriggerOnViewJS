@@ -2,9 +2,18 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
 {
     if(document.readyState !== 'complete')
     {
-        window.addEventListener('load', function(){
-            TriggerOnView(defaultOptions, passedOptions);
-        });
+        const checkReadyState = setInterval(function(){
+            if(document.readyState !== 'complete')
+            {
+                console.log('nope');
+            }
+            else
+            {
+                clearInterval(checkReadyState);
+                TriggerOnView(defaultOptions, passedOptions);
+                console.log('yep');
+            }
+        }, 0);
 
         return;
     }
@@ -204,6 +213,7 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
     // Run automatically
     checkTrigger();
 }
+
 /**
  * velocity-animate (C) 2014-2017 Julian Shapiro.
  *
