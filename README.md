@@ -1,12 +1,12 @@
 # TriggerOnViewJS
 
 ## What is TriggerOnViewJS?
-Simply put, `triggerOnView` is a Javascript/JQuery extended method that sets a trigger and a reaction for any element.
+Simply put, `triggerOnView` is a Javascript function that sets a trigger and a reaction for any element.
 
 The most common usage is likely to be to animate these elements 'in to' or 'out of' view or as the page scrolls with CSS animations or customised functions.
 
 ## Requirements
-Only JQuery is required.
+Velocity.js comes installed with triggeronview.js, so it is not required seperately.
 
 ## How to install and use
 
@@ -14,16 +14,7 @@ There are two ways you may wish to install TriggerOnViewJS:
 
 ### Installing
 
-#### 1. Make sure JQuery is installed
-`composer require components/jquery`
-
-Include `<script src="/vendor/components/jquery/jquery.min.js"></script>` within your `<head>` tags
-
-or prehaps using a CDN:
-
-`<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>`
-
-#### 2. Getting TriggerOnViewJS
+#### 1. Getting TriggerOnViewJS
 ##### Option 1: Using composer
 `composer require zephni/trigger-on-view-js dev-main`
 
@@ -31,7 +22,7 @@ or prehaps using a CDN:
 Download `triggeronview.js` from this repository and place wherever you keep JS files in your project.
 
 
-#### 3. Include the script into your page (Source depends on where it was installed)
+#### 2. Include the script into your page (Source depends on where it was installed)
 Place this somewhere after JQuery
 
 `<script src="/vendor/zephni/triggeronview.js"></script>`
@@ -41,74 +32,91 @@ Place this somewhere after JQuery
 This is the most basic version, it sets the given element as both the trigger and the element to animate:
 
 ```javascript
-$('#elementToAnimate').triggerOnView({
-  default: {left: -100, opacity: 0},
-  in: {left: 0, opacity: 1},
+TriggerOnView({
+  element: '#elementToAnimate',
+  default: {opacity: 0},
+  in: opacity: 1},
 });
 ```
 
 Note that we have set the `default` and `in` options. Everything within default will be ran straight away and set without any animation. The `in` option will set the animation once the trigger element comes into view. By default if you do not include an `out` option, `default` will be used to animate back from once the trigger element is out of view.
 
-If you wish to have a different trigger element you can do this two ways:
+If you wish to have a different trigger element you can pass both, if trigger is not set then it will default to the same as the given element:
 
 ```javascript
-$('#trigger').triggerOnView({
-  element: $('#element'),
+TriggerOnView({
+  element: '#element',
+  trigger: '#trigger',
   ...
 });
 ```
 
-Or you can target the elements the other way around:
+You can assign multiple elements at once with your query selector eg. using a class.
 
 ```javascript
-$('#element').triggerOnView({
-  triggger: $('#trigger'),
-  ...
-});
-```
-`triggerOnView` can be assigned to multiple elements at once, eg. using a class. By default each one will use itself as both the trigger and element but either of these can be overriden across all as above.
-
-```javascript
-$('.class').triggerOnView({
+TriggerOnView({
+  element: '.someClass',
   ...
 });
 ```
 Commonly you may have a single trigger, but multiple elements within that need to animate at the same time, to do this it makes sense to use the trigger element primarily, and pass an array of options that set the element for each one. Once again this can be done the other way around if needed:
 
 ```javascript
-$('#trigger').triggerOnView([
+TriggerOnView([
   {
-    element: $('#exampleItem1'),
+    trigger: '#trigger',
+    element: '#exampleItem1',
     default: {left: -100, opacity: 0},
     in: {left: 0, opacity: 1},
   },
   {
-    element: $('#exampleItem2'),
+    trigger: '#trigger',
+    element: '#exampleItem2',
     default: {left: 100, opacity: 0},
     in: {left: 0, opacity: 1},
   }
 ]);
 ```
 
-Note that by default the `'relative'` position is applied to all elements. To disable this pass `defaultPosition: false`.
+If you wish to pass a set of default options for each one you can pass a config object first like so:
+
+```javascript
+TriggerOnView({
+    trigger: '#trigger',
+    delay: 0.5
+  },[
+  {
+    element: '#exampleItem1',
+    default: {left: -100, opacity: 0},
+    in: {left: 0, opacity: 1},
+  },
+  {
+    element: '#exampleItem2',
+    default: {left: 100, opacity: 0},
+    in: {left: 0, opacity: 1},
+  }
+]);
+```
+
+Note that by default the `'relative'` position is applied to all elements. To disable this pass `defaultPosition: false` or change to another valid CSS position value.
 
 ### The options object
 
 #### List of available options and defaults:
 
 ```javascript
-triggerOffset: 50,
+triggerOffset: 0,
 time: 1,
 delay: 0,
 inDelay: false,
 outDelay: false,
-element: $(this),
-trigger: $(this),
+element: null,
+trigger: null,
 easing: 'swing',
 defaultPosition: 'relative',
-default:{opacity: 0},
-in:{opacity: 1},
-out: null,
+default: {},
+in: {},
+out: {},
 callbackPreIn: function(){},
 callbackPreOut: function(){},
 callbackPostIn: function(){},
@@ -126,7 +134,7 @@ callbackPostOut: function(){}
 | `outDelay`                      | *the number of seconds to delay before triggering on the out event, this will override the in value set by 'delay'. Can take decimals eg. 1.2 or 2.5.* |
 | `element`                      | *The element to run animation events on* |
 | `trigger`                      | *The trigger element that will run the animation on the target element once in view* |
-| `easing`                       | *This can accept any available JQuery animate easing type, see [https://api.jquery.com/animate](https://api.jquery.com/animate)* |
+| `easing`                       | *This can accept any available Velocity animate easing type, see [http://velocityjs.org/#easing](http://velocityjs.org/#easing)* |
 | `defaultPosition`              | *In most cases a relative position will be required for the element so it can respond to directional positioning values but this can be changed if needed. This can accept any CSS position value.* |
 | `default`                      | *The default CSS to apply to the target element, this will be ran straight away and also be used as the out animation if `out` is not false.* |
 | `in`                           | *The CSS to animate once the `in` trigger has been called* |
