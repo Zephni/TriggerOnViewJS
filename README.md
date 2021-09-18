@@ -1,5 +1,4 @@
-## Note that this jquery branch has been abandonded in favour of using vanilla js, please see the main branch.
-# TriggerOnViewJS (jquery)
+# TriggerOnViewJS (requires jquery)
 
 ## What is TriggerOnViewJS?
 Simply put, `triggerOnView` is a Javascript/JQuery extended method that sets a trigger and a reaction for any element.
