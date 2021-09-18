@@ -1,4 +1,4 @@
-function TriggerOnView(defaultOptions = null, passedOptions = null)
+function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 0)
 {
     if(document.readyState !== 'complete')
     {
@@ -16,8 +16,14 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
         defaultOptions = {};
     }
 
-    // If array passed, loop and set up all elements
-    if(Array.isArray(passedOptions)){
+    // Check if first pass
+    if(numPasses == 0)
+    {
+        // If not an array, turn passedOptions into one and loop through and set up all elements
+        if(!Array.isArray(passedOptions)){
+            passedOptions = [passedOptions];    
+        }
+
         for(key in passedOptions)
         {
             // Apply passed options to the default option set
@@ -31,22 +37,26 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
             
             // Set the DOM elements
             var tempElement = document.querySelectorAll(passedOptions[key].element);
+            var setTriggersToElement = false;
 
             // Run triggerOnView
             for (i = 0; i < tempElement.length; ++i) {
                 passedOptions[key].element = tempElement[i];
 
-                // If trigger not set then default it to same as element, otherwise use a querySelector
-                if(passedOptions[key].trigger == undefined)
+                // If trigger not set then switch setTriggersToElement to true
+                if(passedOptions[key].trigger === undefined)
+                {
+                    setTriggersToElement = true;
+                }
+
+                // If setTriggersToElement is true then set each trigger to the current element
+                if(setTriggersToElement)
                 {
                     passedOptions[key].trigger = passedOptions[key].element;
                 }
-                else
-                {
-                    passedOptions[key].trigger = document.querySelector(passedOptions[key].trigger);
-                }
 
-                new TriggerOnView(passedOptions[key]);
+                // Run TriggerOnView
+                new TriggerOnView(passedOptions[key], null, 1);
             }
         }
 
@@ -64,7 +74,8 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
         trigger: null,
         easing: 'swing',
         defaultPosition: 'relative',
-        default: {},
+        runInOnEntry: true,
+        default: null,
         in: {},
         out: {},
         callbackPreIn: function(){},
@@ -80,6 +91,18 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
     var triggerd = false;
     var triggerdBuffer = null;
 
+    // Set element by query selector if still not set to DOM element
+    if((options.element instanceof Element) === false)
+    {
+        options.element = document.querySelector(options.element);
+    }
+
+    // Set trigger by query selector if still not set to DOM element
+    if((options.trigger instanceof Element) === false)
+    {
+        options.trigger = document.querySelector(options.trigger);
+    }
+
     // Is running, to avoid duplicate triggers
     var isRunning = false;
 
@@ -90,11 +113,11 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
     options.inDelay = (!options.inDelay) ? options.delay : options.inDelay;
     options.outDelay = (!options.outDelay) ? options.delay : options.outDelay;
 
-    // Set default and out to if either not set, or set to empty object
-    options.out = (options.out == null) ? options.default : options.out;
+    // If default not set then default to out
+    options.default = (options.default == null) ? options.out : options.default;
 
     // Set up default
-    (typeof options.defaultPosition == 'string') ? modifyElementCSS(options.element, {position: options.defaultPosition}) : null;
+    modifyElementCSS(options.element, {position: options.defaultPosition});
     modifyElementCSS(options.element, options.default);
 
 
@@ -156,9 +179,12 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
             var currentDelay = ((inOrOut == 'in') ? options.inDelay : options.outDelay) * 1000;
 
             // Stop any current animations and the animate with current parameter
-            Velocity(options.element, animateCSS, {duration: options.time, easing: options.easing, queue: false, delay: currentDelay, complete: function(){
+            Velocity(options.element, animateCSS, {duration: options.time, easing: options.easing, queue: (options.runInOnEntry && numPasses == 1), delay: currentDelay, complete: function(){
                 // Call the correct post animate callback function
                 (triggerType == 'in') ? options.callbackPostIn() : (triggerType == 'out') ? options.callbackPostOut() : null;
+
+                // Increment pass
+                numPasses++;
 
                 // Set running to false
                 isRunning = false;
@@ -168,10 +194,7 @@ function TriggerOnView(defaultOptions = null, passedOptions = null)
 
     function modifyElementCSS(element, cssObject)
     {
-        for(const [key, value] of Object.entries(cssObject))
-        {
-            element.style.setProperty(key, value);
-        }
+        Velocity(element, cssObject, {duration: 0});
     }
 
     // Event listeners
