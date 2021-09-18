@@ -23,7 +23,7 @@ Download `triggeronview.js` from this repository and place wherever you keep JS 
 
 
 #### 2. Include the script into your page (Source depends on where it was installed)
-Place this somewhere after JQuery
+Place this somewhere within your head tags
 
 `<script src="/vendor/zephni/triggeronview.js"></script>`
 
