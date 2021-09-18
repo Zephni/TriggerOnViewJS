@@ -1,6 +1,6 @@
 {
     "name": "zephni/trigger-on-view-js",
-    "description": "Set a trigger and a reaction for any element. Allowing them to animate in to/out of view or as the page scrolls with CSS animations or customised functions. Requires JQuery.",
+    "description": "Set a trigger and a reaction for any element. Allowing them to animate in to/out of view or as the page scrolls with CSS animations or customised functions.",
     "license": "MIT",
     "authors": [
         {
