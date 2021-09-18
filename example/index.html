@@ -10,28 +10,27 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-        <!-- JQuery -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
         <!-- TriggerOnView.js -->
-        <script src="../src/triggeronview.js"></script>
+        <script src="../src/triggeronview.js?1"></script>
 
         <script>
-            $(function(){
-                $('#largeImage').triggerOnView({
-                        triggerOffset: 150,
-                        default: {opacity: 0},
-                        in: {opacity: 1}
-                });
-
-                $('#trigger').triggerOnView([
+            document.addEventListener("DOMContentLoaded", function(event) { 
+                TriggerOnView([
                     {
-                        element: $('#exampleItem1'),
+                        element: '#largeImage',
+                        triggerOffset: 150,
+                        in: {opacity: 1},
+                        out: {opacity: 0}
+                    },
+                    {
+                        element: '#exampleItem1',
+                        trigger: '#trigger',
                         default: {left: -100, opacity: 0},
                         in: {left: 0, opacity: 1}
                     },
                     {
-                        element: $('#exampleItem2'),
+                        element: '#exampleItem2',
+                        trigger: '#trigger',
                         default: {left: 100, opacity: 0},
                         in: {left: 0, opacity: 1}
                     }
