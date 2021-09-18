@@ -15,7 +15,7 @@
             passedOptions[key] = Object.assign(defaultOptions, passedOptions[key]);
 
             // Run triggerOnView
-            TriggerOnView(passedOptions[key]);
+            new TriggerOnView(passedOptions[key]);
         }
 
         return;
@@ -110,13 +110,7 @@
             // Get in or out
             inOrOut = (triggerd) ? 'in' : 'out';
 
-            console.log(inOrOut);
-
-            // Apply delay if set
-            setTimeout(function(){
-                // Run trigger function with either 'in' or 'out' based on triggered boolean
-                trigger(inOrOut);
-            }, ((inOrOut == 'in') ? options.inDelay : options.outDelay) * 1000);
+            trigger(inOrOut);
         }
     }
 
@@ -142,8 +136,11 @@
             // Set the current running trigger
             isRunning = triggerType;
 
+            // Get current delay
+            var currentDelay = ((inOrOut == 'in') ? options.inDelay : options.outDelay) * 1000;
+
             // Stop any current animations and the animate with current parameter
-            Velocity(options.element, animateCSS, {duration: options.time, easing: options.easing, queue: false, complete: function(){
+            Velocity(options.element, animateCSS, {duration: options.time, easing: options.easing, queue: false, delay: currentDelay, complete: function(){
                 // Call the correct post animate callback function
                 (triggerType == 'in') ? options.callbackPostIn() : (triggerType == 'out') ? options.callbackPostOut() : null;
 
