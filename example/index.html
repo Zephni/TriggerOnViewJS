@@ -14,28 +14,26 @@
         <script src="../src/triggeronview.js?1"></script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function(event) { 
-                TriggerOnView([
-                    {
-                        element: '#largeImage',
-                        triggerOffset: 150,
-                        in: {opacity: 1},
-                        out: {opacity: 0}
-                    },
-                    {
-                        element: '#exampleItem1',
-                        trigger: '#trigger',
-                        default: {left: -100, opacity: 0},
-                        in: {left: 0, opacity: 1}
-                    },
-                    {
-                        element: '#exampleItem2',
-                        trigger: '#trigger',
-                        default: {left: 100, opacity: 0},
-                        in: {left: 0, opacity: 1}
-                    }
-                ]);
-            });
+            TriggerOnView([
+                {
+                    element: '#largeImage',
+                    triggerOffset: 150,
+                    in: {opacity: 1},
+                    out: {opacity: 0}
+                },
+                {
+                    element: '#exampleItem1',
+                    trigger: '#trigger',
+                    default: {left: -100, opacity: 0},
+                    in: {left: 0, opacity: 1}
+                },
+                {
+                    element: '#exampleItem2',
+                    trigger: '#trigger',
+                    default: {left: 100, opacity: 0},
+                    in: {left: 0, opacity: 1}
+                }
+            ]);
         </script>
     </head>
     <body>
@@ -55,6 +53,10 @@
                     <div style="width: 100%; aspect-ratio: 4/2; overflow: hidden;" class="mb-4">
                         <img src="https://picsum.photos/800/400" alt="Random image" id="largeImage" class="img w-100 img-fluid py-3">
                     </div>
+
+                    <!-- <div style="width: 100%; aspect-ratio: 4/2; overflow: hidden;" class="mb-4">
+                        <img src="https://picsum.photos/800/400" alt="Random image" class="largeImage img w-100 img-fluid py-3">
+                    </div> -->
 
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
