@@ -26,7 +26,9 @@ or prehaps using a CDN:
 
 #### 2. Getting TriggerOnViewJS
 ##### Option 1: Using composer
-`composer require zephni/trigger-on-view-js dev-main`
+`composer require zephni/trigger-on-view-js 1.0.15`
+
+Note that 1.0.15 is the last version that uses jQuery, anything 1.1.0 or above uses vanilla Javascript
 
 ##### Option 2: Manual install
 Download `triggeronview.js` from this repository and place wherever you keep JS files in your project.
