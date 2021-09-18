@@ -30,8 +30,8 @@
                 {
                     element: '#exampleItem2',
                     trigger: '#trigger',
-                    in: {left: 0, opacity: 1},
-                    out: {left: 100, opacity: 0},
+                    in: {right: 0, opacity: 1},
+                    out: {right: -100, opacity: 0},
                 }
             ]);
         </script>
@@ -51,7 +51,7 @@
                     <p>This is another text.</p>
 
                     <div style="width: 100%; aspect-ratio: 4/2; overflow: hidden;" class="mb-4">
-                        <img src="https://picsum.photos/800/400" alt="Random image" id="largeImage" class="img w-100 img-fluid py-3">
+                        <img src="https://picsum.photos/800/400" alt="Random image" id="largeImage" class="img w-100 img-fluid py-3" style="opacity: 0;">
                     </div>
 
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
@@ -60,11 +60,11 @@
                     <div id="trigger" class="p-5 text-white bg-dark rounded-3 my-4">
                         <div class="row align-items-center">
                             <div class="col-4">
-                                <img src="https://picsum.photos/300/200"  id="exampleItem1" class="img w-100 img-fluid">
+                                <img src="https://picsum.photos/300/200"  id="exampleItem1" class="img w-100 img-fluid" style="opacity: 0; left: -100px;">
                             </div>
                             <div class="col-2"></div>
                             <div class="col-6">
-                                  <figure id="exampleItem2">
+                                  <figure id="exampleItem2" style="opacity: 0; right: -100px;">
                                     <blockquote class="blockquote text-end">
                                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
                                     </blockquote>

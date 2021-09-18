@@ -114,7 +114,6 @@ element: null,
 trigger: null,
 easing: 'swing',
 defaultPosition: 'relative',
-runInOnEntry: true,
 default: {},
 in: {},
 out: {},
@@ -137,7 +136,6 @@ callbackPostOut: function(){}
 | `trigger`                      | *The trigger element that will run the animation on the target element once in view* |
 | `easing`                       | *This can accept any available Velocity animate easing type, see [http://velocityjs.org/#easing](http://velocityjs.org/#easing)* |
 | `defaultPosition`              | *In most cases a relative position will be required for the element so it can respond to directional positioning values but this can be changed if needed. This can accept any CSS position value.* |
-| `runInOnEntry`                 | *Run the in animation if page loads with trigger in view* |
 | `default`                      | *The default CSS to apply to the target element, this will be ran straight away. Will be set to `out` by default if not defined.* |
 | `in`                           | *The CSS to animate once the `in` trigger has been called* |
 | `out`                          | *The CSS to animate once the `out` trigger has been called. Set to `{}` to prevent out animation* |

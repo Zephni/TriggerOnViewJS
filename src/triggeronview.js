@@ -3,15 +3,10 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
     if(document.readyState !== 'complete')
     {
         const checkReadyState = setInterval(function(){
-            if(document.readyState !== 'complete')
-            {
-                console.log('nope');
-            }
-            else
+            if(document.readyState === 'complete')
             {
                 clearInterval(checkReadyState);
                 TriggerOnView(defaultOptions, passedOptions);
-                console.log('yep');
             }
         }, 0);
 
@@ -24,6 +19,8 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
         passedOptions = defaultOptions;
         defaultOptions = {};
     }
+
+    var numPasses = numPasses;
 
     // Check if first pass
     if(numPasses == 0)
@@ -83,7 +80,6 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
         trigger: null,
         easing: 'swing',
         defaultPosition: 'relative',
-        runInOnEntry: true,
         default: null,
         in: {},
         out: {},
@@ -125,9 +121,9 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
     // If default not set then default to out
     options.default = (options.default == null) ? options.out : options.default;
 
-    // Set up default
-    modifyElementCSS(options.element, {position: options.defaultPosition});
-    modifyElementCSS(options.element, options.default);
+    // Set up default position
+    Velocity(options.element, {position: options.defaultPosition}, {duration: 0});
+    Velocity(options.element, options.out, {duration: 0});
 
 
     /**
@@ -148,7 +144,7 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
         // If the trigger element plus the offset is visible on the page then set triggered to true, otherwise false
         triggerd = ((triggerElementTop + options.triggerOffset <= bottomOfWindow)
                 && (triggerElementBottom - options.triggerOffset >= topOfWindow));
-        
+
         // Check there has been a change in triggered state since the last event
         if(triggerd != triggerdBuffer)
         {
@@ -157,7 +153,7 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
 
             // Get in or out
             inOrOut = (triggerd) ? 'in' : 'out';
-
+            
             trigger(inOrOut);
         }
     }
@@ -188,7 +184,7 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
             var currentDelay = ((inOrOut == 'in') ? options.inDelay : options.outDelay) * 1000;
 
             // Stop any current animations and the animate with current parameter
-            Velocity(options.element, animateCSS, {duration: options.time, easing: options.easing, queue: (options.runInOnEntry && numPasses == 1), delay: currentDelay, complete: function(){
+            var velocityOptions = {duration: options.time, easing: options.easing, queue: false, delay: currentDelay, complete: function(){
                 // Call the correct post animate callback function
                 (triggerType == 'in') ? options.callbackPostIn() : (triggerType == 'out') ? options.callbackPostOut() : null;
 
@@ -197,13 +193,10 @@ function TriggerOnView(defaultOptions = null, passedOptions = null, numPasses = 
 
                 // Set running to false
                 isRunning = false;
-            }});
-        }
-    }
+            }};
 
-    function modifyElementCSS(element, cssObject)
-    {
-        Velocity(element, cssObject, {duration: 0});
+            Velocity(options.element, animateCSS, velocityOptions);
+        }
     }
 
     // Event listeners
