@@ -1,3 +1,5 @@
+
+## Note that this vanilla JS branch is still in development and is showing some bugs. Please see the jQuery branch.
 # TriggerOnViewJS
 
 ## What is TriggerOnViewJS?
